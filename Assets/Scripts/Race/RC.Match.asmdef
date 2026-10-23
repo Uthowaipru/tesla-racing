@@ -1,0 +1,19 @@
+{
+    "name": "RC.Match",
+    "rootNamespace": "VehicleSystem",
+    "references": [
+        "RC.Core",
+        "RC.Vehicle",
+        "RC.World",
+        "RC.Bots"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

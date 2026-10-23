@@ -1,0 +1,17 @@
+{
+    "name": "RC.Services",
+    "rootNamespace": "VehicleSystem",
+    "references": [
+        "RC.Core",
+        "RC.Vehicle"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

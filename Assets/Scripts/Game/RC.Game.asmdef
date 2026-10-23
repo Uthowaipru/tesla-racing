@@ -1,0 +1,26 @@
+{
+    "name": "RC.Game",
+    "rootNamespace": "VehicleSystem",
+    "references": [
+        "RC.Core",
+        "RC.Vehicle",
+        "RC.Input",
+        "RC.Camera",
+        "RC.World",
+        "RC.Bots",
+        "RC.Match",
+        "RC.Services",
+        "RC.UI",
+        "Unity.InputSystem",
+        "UnityEngine.UI"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,24 @@
+{
+    "name": "RC.UI",
+    "rootNamespace": "VehicleSystem",
+    "references": [
+        "RC.Core",
+        "RC.Vehicle",
+        "RC.Input",
+        "RC.Camera",
+        "RC.World",
+        "RC.Match",
+        "RC.Services",
+        "Unity.InputSystem",
+        "UnityEngine.UI"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

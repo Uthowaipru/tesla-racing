@@ -15,7 +15,7 @@ Reference UI or `LocalPlayerRig`. Put new scoring numbers inline: new numbers go
 `CONTRACTS.md` §D.
 
 ## Possible next work (not decided)
-`ScoringRules` ScriptableObject from the ~25 numbers now on `MatchManager` (`DECOUPLING_PLAN.md` Stage 6); `LevelDefinition` objectives and stars (with M3); Equal-tuning vs Classic modes; room rules for networking (host decides); rewards math (10 points = 1 coin, 40 points = 1 Cash).
+`ScoringRules` exists now (Stage 6a); next: hide the legacy inline numbers, one rules asset per mode/level, `SetRules` from `LevelDefinition`; `LevelDefinition` objectives and stars (with M3); Equal-tuning vs Classic modes; room rules for networking (host decides); rewards math (10 points = 1 coin, 40 points = 1 Cash).
 
 Reference rules (GDD v0.3): every 100 m +10; side bump on traffic at speed +20 / +30 (once per NPC); chain bonus; ram a rival from behind +20, side +25; overtake +10; cross to oncoming +50; destroyed −50.
 

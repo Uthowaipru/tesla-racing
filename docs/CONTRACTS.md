@@ -84,7 +84,7 @@ events `StateChanged(MatchState)`, `PointsAwarded(MatchPlayer, int, ScoreReason)
 `MatchManager.MatchLength`. **`MatchResult` [exists]:** `points, rank, playerCount, distance, wrongWayDistance, npcBumps, rivalRams, overtakes, timesDestroyed, maxChain, coins, cash`.
 **`RaceConfig` / `PlayerSlot` / `SlotController` [exists].** **`VehicleSpawner` [exists]:** `LocalVehicle`, `SpawnBots()`, `SpawnLocalFromProfile()`, `SpawnAll(RaceConfig)`, `Spawn(PlayerSlot)`.
 - **[done, Stage 2D]:** `MatchManager` no longer looks up `LocalPlayerRig`. For a hand-placed car it registers the car in `VehicleController.All` whose `VehicleDriver.IsLocalPlayer` is true (same timing as before). The spawner path is unchanged.
-- **[planned] Stage 6:** the ~25 scoring and timing numbers move into a `ScoringRules` ScriptableObject. The points table in the GDD is the default.
+- **[done, Stage 6a]:** `ScoringRules` (ScriptableObject, `RC.Match`): the 25 scoring numbers (distance, bumps, chain, rivals, penalty, coin/cash rates). `MatchManager.rules` (field), `MatchManager.SetRules(ScoringRules)`; `ScoringRules.ApplyTo(MatchManager)` / `CaptureFrom(MatchManager)`. The old inline fields on `MatchManager` stay (legacy fallback, overwritten by the asset in `Awake`). Match length, countdown and sources stay on the scene.
 
 ## E. Input and Camera
 

@@ -98,6 +98,10 @@ namespace VehicleSystem
         public int pointsPerCoin = 10;
         public int pointsPerCash = 40;
 
+        [Header("Rules asset (optional)")]
+        [Tooltip("If set, the numbers in this asset replace the point values above when the scene starts (and when SetRules() is called). Leave empty to use the values above. Tools > Vehicle > Create Scoring Rules From Match Manager makes one from the current numbers.")]
+        public ScoringRules rules;
+
         [Header("Sources (found in the scene if empty)")]
         public RoadGenerator road;
         public WrongWayTracker wrongWayTracker;
@@ -135,6 +139,18 @@ namespace VehicleSystem
         readonly Dictionary<int, float> pairCooldown = new Dictionary<int, float>();   // ram and overtake cooldowns per pair
         readonly Dictionary<int, int> pairOrder = new Dictionary<int, int>();           // who is ahead of whom (-1 / +1)
         int nextId = 1;
+
+        void Awake()
+        {
+            if (rules != null) rules.ApplyTo(this);
+        }
+
+        /// <summary>Use another scoring rules asset (a level or a room setting). Call it before Begin(); passing null keeps the current numbers.</summary>
+        public void SetRules(ScoringRules newRules)
+        {
+            rules = newRules;
+            if (rules != null) rules.ApplyTo(this);
+        }
 
         // ------------------------------------------------------------------ players
 

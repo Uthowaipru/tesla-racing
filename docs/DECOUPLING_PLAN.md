@@ -116,7 +116,7 @@ an `internal` member used across folders.
 
 ## 7. Stage 6 — ScriptableObjects for rules (feature work, one conversation each)
 
-1. `ScoringRules` (M5): the ~25 numbers now on `MatchManager` (`metersPerReward`, `pointsPerReward`, bump points, chain bonuses, ram points, overtake,
+1. **DONE 2026-10-23 (awaiting your test; see `scoring-rules/SCORING_RULES_NOTES.md`)** `ScoringRules` (M5): the ~25 numbers now on `MatchManager` (`metersPerReward`, `pointsPerReward`, bump points, chain bonuses, ram points, overtake,
    head-on, destroyed penalty, `pointsPerCoin`, `pointsPerCash`, cooldowns). `MatchManager` gets a `rules` field; a default asset is created by an editor tool with the current values.
    Migration: keep the old public fields for one release, copy them into the default asset once, then deprecate.
 2. `BotSettings` as an asset per difficulty (M4).

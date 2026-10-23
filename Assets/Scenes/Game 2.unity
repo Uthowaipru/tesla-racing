@@ -11174,6 +11174,7 @@ MonoBehaviour:
   allowNegativeScore: 0
   pointsPerCoin: 10
   pointsPerCash: 40
+  rules: {fileID: 11400000, guid: dc238a82e5df34245baa4176ef430e1e, type: 2}
   road: {fileID: 1111244043}
   wrongWayTracker: {fileID: 0}
 --- !u!4 &1197217010

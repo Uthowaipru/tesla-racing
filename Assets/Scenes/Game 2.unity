@@ -11680,7 +11680,7 @@ MonoBehaviour:
   cutsceneSeconds: 5
   countUpSeconds: 1.2
   offerDoubleReward: 1
-  maxDoublesPerDay: 5
+  maxDoublesPerDay: 0
   simulateAdsWithoutSdk: 1
   simulatedAdSeconds: 2
   adPlacement: double_match_rewards

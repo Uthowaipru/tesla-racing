@@ -111,9 +111,7 @@ namespace VehicleSystem
         public float safeHistorySeconds = 12f;
 
         [Header("Camera")]
-        [Tooltip("Assigned by LocalPlayerRig.Attach() for the local player's car. Leave empty for bots / remote cars.")]
-        public VehicleCameraRig cameraRig;
-        [Tooltip("Snap the camera behind the car after a teleport, so it does not swing across the map.")]
+        [Tooltip("Snap the camera behind the car after a teleport, so it does not swing across the map. (LocalPlayerRig listens to the Recovered event and snaps the local player's camera.)")]
         public bool snapCameraOnRecover = true;
 
         // ---- set by VehicleDriver every frame: the driver's own throttle -1..1 (player, bot or network)
@@ -640,7 +638,6 @@ namespace VehicleSystem
             cooldownTimer = cooldown;
             AutoRecoverProgress = 0f;
 
-            if (snapCameraOnRecover && cameraRig != null) cameraRig.Snap();
             Recovered?.Invoke();
         }
 

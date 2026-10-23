@@ -172,9 +172,10 @@ namespace VehicleSystem
 
             if (!car.TryGetComponent(out driver)) driver = car.gameObject.AddComponent<VehicleDriver>();
             driver.SetSource(input);
+            driver.IsLocalPlayer = true;
 
             car.TryGetComponent(out recovery);
-            if (recovery != null) recovery.cameraRig = cameraRig;
+            if (recovery != null) recovery.Recovered += OnRecovered; // snaps the camera after a teleport
 
             if (road != null)
             {
@@ -210,8 +211,8 @@ namespace VehicleSystem
                 input.BoostPressed -= OnBoostPressed;
                 input.CameraTogglePressed -= OnCameraTogglePressed;
             }
-            if (driver != null && ReferenceEquals(driver.Source, input)) driver.SetSource(null);
-            if (recovery != null && recovery.cameraRig == cameraRig) recovery.cameraRig = null;
+            if (driver != null && ReferenceEquals(driver.Source, input)) { driver.SetSource(null); driver.IsLocalPlayer = false; }
+            if (recovery != null) recovery.Recovered -= OnRecovered;
             if (recovery != null && road != null) recovery.isPositionSafe = null;
             if (resetCounter != null) resetCounter.SetRecovery(null);
             if (speedometer != null) speedometer.SetVehicle(null);
@@ -225,6 +226,12 @@ namespace VehicleSystem
             boost = null;
             driver = null;
             recovery = null;
+        }
+
+        /// <summary>After the car was teleported (manual or auto recovery) put the camera straight behind it.</summary>
+        void OnRecovered()
+        {
+            if (recovery != null && recovery.snapCameraOnRecover && cameraRig != null) cameraRig.Snap();
         }
 
         /// <summary>The finger movement (pixels) this frame, from touches that are not on a UI button.</summary>
@@ -277,7 +284,7 @@ namespace VehicleSystem
                 cameraRig.SetLookBack(input.LookBack);
 
                 // free camera on a phone: dragging a finger over the game (not over a button) turns the camera
-                if (cameraRig.FreeCamera && InputModeManager.Instance.Mode == InputMode.Touch && !PauseMenu.IsPaused)
+                if (cameraRig.FreeCamera && InputModeManager.Instance.Mode == InputMode.Touch && !GameState.IsPaused)
                     cameraRig.SetLookInput(ReadTouchDrag() * touchLookSensitivity, true); // true = already a turn in degrees, not a speed
             }
         }

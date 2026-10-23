@@ -160,7 +160,7 @@ namespace VehicleSystem
         void Update()
         {
             // the menu is open: ignore the driving controls (no reset / handbrake while paused)
-            if (PauseMenu.IsPaused)
+            if (GameState.IsPaused)
             {
                 Current = DriveInput.Neutral;
                 LookBack = false;

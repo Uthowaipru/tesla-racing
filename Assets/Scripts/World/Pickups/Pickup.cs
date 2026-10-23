@@ -72,7 +72,7 @@ namespace VehicleSystem
             Rigidbody body = other.attachedRigidbody;
             if (body == null || !body.TryGetComponent(out VehicleController car)) return;
 
-            if (localPlayerOnly && !(car.TryGetComponent(out VehicleDriver driver) && driver.Source is LocalPlayerInput)) return;
+            if (localPlayerOnly && !(car.TryGetComponent(out VehicleDriver driver) && driver.IsLocalPlayer)) return;
             if (!TryGive(car)) return;
 
             Collected?.Invoke(this, car);

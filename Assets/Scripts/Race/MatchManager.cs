@@ -38,7 +38,7 @@ namespace VehicleSystem
     ///   - being destroyed: -50
     /// Speed tiers use the player's OWN speed compared with their vehicle's top speed (the thresholds of its VehicleImpactSensor).
     ///
-    /// Vehicles join with RegisterPlayer() (VehicleSpawner does it). If nobody has joined, the vehicle of the LocalPlayerRig does.
+    /// Vehicles join with RegisterPlayer() (VehicleSpawner does it). If nobody has joined, the car whose VehicleDriver.IsLocalPlayer is set (the LocalPlayerRig's car) does.
     /// </summary>
     [DefaultExecutionOrder(-10)]
     public class MatchManager : MonoBehaviour
@@ -237,8 +237,16 @@ namespace VehicleSystem
             // a vehicle placed in the scene instead of spawned
             if (players.Count == 0)
             {
-                var rig = FindFirstObjectByType<LocalPlayerRig>();
-                if (rig != null && rig.Vehicle != null) RegisterPlayer(rig.Vehicle, "You", true);
+                // (the local player's car is the one whose VehicleDriver.IsLocalPlayer was set by LocalPlayerRig.Attach)
+                var cars = VehicleController.All;
+                for (int i = 0; i < cars.Count; i++)
+                {
+                    if (cars[i].TryGetComponent(out VehicleDriver localDriver) && localDriver.IsLocalPlayer)
+                    {
+                        RegisterPlayer(cars[i], "You", true);
+                        break;
+                    }
+                }
             }
 
             for (int i = 0; i < players.Count; i++) Hook(players[i]); // those that joined before the road was found

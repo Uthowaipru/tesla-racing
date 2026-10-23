@@ -34,8 +34,8 @@ namespace VehicleSystem
     /// </summary>
     public class PauseMenu : MonoBehaviour
     {
-        /// <summary>True while the menu is open. LocalPlayerInput ignores the driving controls then.</summary>
-        public static bool IsPaused { get; private set; }
+        /// <summary>True while the menu is open. Forwards to GameState.IsPaused (Core); kept so existing callers keep working.</summary>
+        public static bool IsPaused => GameState.IsPaused;
 
         const string VolumeKey = "VehicleSystem.MasterVolume";
         const string AutoAccelerateKey = "VehicleSystem.AutoAccelerate";
@@ -101,13 +101,13 @@ namespace VehicleSystem
 #endif
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-        static void ResetStatics() => IsPaused = false;
+        static void ResetStatics() => GameState.SetPaused(false);
 
         // ------------------------------------------------------------------ setup
 
         void Awake()
         {
-            IsPaused = false;
+            GameState.SetPaused(false);
 
             if (uiRoot == gameObject) uiRoot = null; // would switch this script off
 
@@ -224,7 +224,7 @@ namespace VehicleSystem
         public void Pause()
         {
             if (IsPaused) return;
-            IsPaused = true;
+            GameState.SetPaused(true);
 
             if (freezeTime)
             {
@@ -252,7 +252,7 @@ namespace VehicleSystem
 
         void Cleanup(bool restoreCursor)
         {
-            IsPaused = false;
+            GameState.SetPaused(false);
             if (timeFrozen)
             {
                 Time.timeScale = prevTimeScale > 0f ? prevTimeScale : 1f;

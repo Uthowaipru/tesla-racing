@@ -28,6 +28,9 @@ namespace VehicleSystem
         /// <summary>The input that was sent to the vehicle this frame (after recovery overrides).</summary>
         public DriveInput LastInput { get; private set; }
 
+        /// <summary>True for the car the local human is driving. Set by LocalPlayerRig.Attach(); false for bots and remote cars.</summary>
+        public bool IsLocalPlayer { get; set; }
+
         public void SetSource(IDriveInputSource newSource) => source = newSource;
 
         void Awake()

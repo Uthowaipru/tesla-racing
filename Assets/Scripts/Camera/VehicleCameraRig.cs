@@ -257,7 +257,7 @@ namespace VehicleSystem
                 Cursor.visible = true;
                 return;
             }
-            if (lockCursor && !Application.isMobilePlatform && !PauseMenu.IsPaused) Cursor.lockState = CursorLockMode.Locked;
+            if (lockCursor && !Application.isMobilePlatform && !GameState.IsPaused) Cursor.lockState = CursorLockMode.Locked;
         }
 
         void Start()

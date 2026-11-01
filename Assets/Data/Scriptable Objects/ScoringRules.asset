@@ -15,15 +15,15 @@ MonoBehaviour:
   metersPerReward: 100
   pointsPerReward: 10
   teleportDistance: 15
-  fastBumpPoints: 20
-  fullThrottleBumpPoints: 30
+  fastBumpPoints: 40
+  fullThrottleBumpPoints: 60
   chainWindow: 4
   chain2Bonus: 5
   chain3Bonus: 10
   chain4Bonus: 20
   chain5PlusBonus: 30
-  rearRamPoints: 20
-  sideRamPoints: 25
+  rearRamPoints: 40
+  sideRamPoints: 50
   overtakePoints: 10
   ramCooldown: 6
   overtakeCooldown: 8

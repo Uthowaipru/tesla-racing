@@ -19,9 +19,9 @@ Create the bank with **Tools > Vehicle > Create Audio Bank**, drag clips into th
 | `recover` | Sfx | VehicleAudio | `VehicleRecovery.Recovered` | |
 | `boost_start` | Sfx | VehicleAudio | `VehicleBoost.BoostStarted` | |
 | `boost_end` | Sfx | VehicleAudio | `VehicleBoost.BoostEnded` | |
-| `pickup` | Sfx | WorldAudio | `Pickup.Collected` | 2D for the local car, 3D for others |
-| `traffic_knock` | Sfx | WorldAudio | `TrafficVehicle.Knocked` | 3D |
-| `wrong_way_start` | Sfx | WorldAudio | `WrongWayChanged(true)` | needs the tracker bound |
+| `pickup` | Sfx | VehicleAudio | a car's battery count or repair count rises during a match (`Pickup.Collected` has no static hook) | 2D for the local car, 3D for others. Misses any pickup that changes neither counter |
+| `traffic_knock` | Sfx | VehicleAudio | a car's impact with a `TrafficVehicle` at or above its `knockSpeed` (`Knocked` has no static hook) | 3D, once per vehicle per second |
+| `wrong_way_start` | Sfx | WorldAudio | `WrongWayChanged(true)` | tracker found once per scene load |
 | `wrong_way_end` | Sfx | WorldAudio | `WrongWayChanged(false)` | |
 | `countdown_tick` | Sfx | MatchAudio | each whole second of the countdown | |
 | `countdown_go` | Sfx | MatchAudio | state becomes Running | |

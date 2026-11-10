@@ -339,6 +339,23 @@ MonoBehaviour:
     minDistance: 3
     maxDistance: 40
     priority: 7
+  - id: engine_player
+    category: 1
+    clips: []
+    volume: 0.8
+    pitchMin: 0.8
+    pitchMax: 2
+    spatial: 0
+    loop: 1
+    maxVoices: 1
+    cooldown: 0
+    minDistance: 3
+    maxDistance: 40
+    priority: 8
+  vehicleEngines:
+  - vehicle: {fileID: 11400000, guid: d729144d205a36c45a1b53f762805ee3, type: 2}
+    playerEngineId: 
+    otherEngineId: 
   engineReferenceSpeed: 30
   engineIdleVolume: 0.35
   engineResponse: 6

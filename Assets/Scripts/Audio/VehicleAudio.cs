@@ -221,6 +221,8 @@ namespace VehicleSystem
                     engine = am.AcquireLoop(enginePlayerId, false, false);
                     if (engine == null && enginePlayerId != AudioIds.EnginePlayer)
                         engine = am.AcquireLoop(AudioIds.EnginePlayer, false, false); // its own entry has no clip yet
+                    if (engine == null)
+                        engine = am.AcquireLoop(AudioIds.EngineOther, false, false); // no player engine clip at all: use the other-car clip, 2D
                 }
                 else
                 {

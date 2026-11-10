@@ -92,9 +92,9 @@ namespace VehicleSystem.EditorTools
                         break;
                 }
 
+                s.preloadAudioData = preload; // Unity 6.3: lives on the sample settings, not on the importer
                 importer.defaultSampleSettings = s;
                 importer.forceToMono = mono;
-                importer.preloadAudioData = preload;
                 importer.SaveAndReimport();
                 changed++;
             }

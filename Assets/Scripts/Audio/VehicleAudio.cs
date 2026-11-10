@@ -16,7 +16,6 @@ namespace VehicleSystem
         VehicleBoost boost;
         VehicleImpactSensor sensor;
         VehicleRecovery recovery;
-        WrongWayTracker tracker;
 
         AudioLoop engine;
         AudioLoop skid;
@@ -26,7 +25,13 @@ namespace VehicleSystem
         float skidLevel;
         float nextEngineTry;
         float nextSkidTry;
-        bool trackerChecked;
+        int lastBatteries;
+        int lastRepairs;
+        int lastKnockId;
+        float lastKnockTime = -999f;
+
+        string enginePlayerId = AudioIds.EnginePlayer;
+        string engineOtherId = AudioIds.EngineOther;
 
         bool IsLocal { get { return driver != null && driver.IsLocalPlayer; } }
 
@@ -38,7 +43,23 @@ namespace VehicleSystem
             boost = FindOn<VehicleBoost>();
             sensor = FindOn<VehicleImpactSensor>();
             recovery = FindOn<VehicleRecovery>();
-            tracker = FindOn<WrongWayTracker>();
+            ResolveEngineIds();
+        }
+
+        // Per-vehicle engine sound: the car's prefab name is matched to a VehicleDefinition listed in the bank.
+        // Done once at attach time. Unlisted vehicles, or empty ids, keep the defaults.
+        void ResolveEngineIds()
+        {
+            AudioManager am = AudioManager.Instance;
+            if (am == null || am.Bank == null) return;
+
+            string prefabName = gameObject.name;
+            if (prefabName.EndsWith("(Clone)")) prefabName = prefabName.Substring(0, prefabName.Length - 7).TrimEnd();
+
+            string playerId, otherId;
+            if (!am.Bank.TryGetVehicleEngine(prefabName, out playerId, out otherId)) return;
+            if (!string.IsNullOrEmpty(playerId)) enginePlayerId = playerId;
+            if (!string.IsNullOrEmpty(otherId)) engineOtherId = otherId;
         }
 
         // Looked up once at attach time, never per frame.
@@ -109,12 +130,31 @@ namespace VehicleSystem
             if (am == null) return;
             AudioBank bank = am.Bank;
 
+            if (info.other != null)
+            {
+                TrafficVehicle traffic = info.other.GetComponentInParent<TrafficVehicle>();
+                if (traffic != null) OnTrafficHit(am, traffic, info);
+            }
+
             float ratio = info.speedRatio;
             if (ratio < bank.impactMinRatio) return;
             string id = ratio >= bank.impactHardRatio ? AudioIds.ImpactHard : AudioIds.ImpactLight;
 
             if (IsLocal) am.Play(id);
             else am.Play(id, info.point == Vector3.zero ? transform.position : info.point);
+        }
+
+        // TrafficVehicle.Knocked is a per-vehicle event with no static hook, so the car that hits it reports the knock
+        // (same speed rule as TrafficVehicle: impact faster than its knockSpeed). One sound per vehicle per second.
+        void OnTrafficHit(AudioManager am, TrafficVehicle traffic, ImpactInfo info)
+        {
+            if (info.impactSpeed < traffic.knockSpeed) return;
+            float now = Time.unscaledTime;
+            int id = traffic.GetInstanceID();
+            if (id == lastKnockId && now - lastKnockTime < 1f) return;
+            lastKnockId = id;
+            lastKnockTime = now;
+            am.Play(AudioIds.TrafficKnock, traffic.transform.position);
         }
 
         void OnDestroyed(ImpactInfo info) { PlayHere(AudioIds.Destroyed); }
@@ -135,7 +175,7 @@ namespace VehicleSystem
             float now = Time.unscaledTime;
             float dt = Time.unscaledDeltaTime;
 
-            if (local && !trackerChecked) BindWrongWayTracker(am);
+            CheckPickups(am, now);
 
             bool silent = GameState.IsPaused || (health != null && health.IsDestroyed);
 
@@ -143,10 +183,20 @@ namespace VehicleSystem
             UpdateSkid(am, local, silent, now, dt);
         }
 
-        void BindWrongWayTracker(AudioManager am)
+        // Pickup.Collected is a per-pickup event with no static hook, so a pickup is heard as its effect:
+        // the car's battery count or repair count going up during a match. Read-only; no subscription needed.
+        void CheckPickups(AudioManager am, float now)
         {
-            trackerChecked = true;
-            if (tracker != null && am.WorldSounds != null) am.WorldSounds.SetWrongWayTracker(tracker);
+            int batteries = boost != null ? boost.Batteries : 0;
+            int repairs = recovery != null ? recovery.ManualResetsLeft : 0;
+
+            MatchAudio match = am.MatchSounds;
+            bool allowed = match == null || !match.HasMatch || (match.IsRunning && now - match.RunningSince > 0.5f);
+
+            if (allowed && (batteries > lastBatteries || repairs > lastRepairs)) PlayHere(AudioIds.Pickup);
+
+            lastBatteries = batteries;
+            lastRepairs = repairs;
         }
 
         void UpdateEngine(AudioManager am, AudioBank bank, bool local, bool silent, float now, float dt)
@@ -168,13 +218,20 @@ namespace VehicleSystem
 
                 if (local)
                 {
-                    engine = am.AcquireLoop(AudioIds.EnginePlayer, false, false);
+                    engine = am.AcquireLoop(enginePlayerId, false, false);
+                    if (engine == null && enginePlayerId != AudioIds.EnginePlayer)
+                        engine = am.AcquireLoop(AudioIds.EnginePlayer, false, false); // its own entry has no clip yet
                 }
                 else
                 {
                     float range = bank.otherEngineRange;
                     bool near = !haveListener || (transform.position - listenerPos).sqrMagnitude <= range * range;
-                    if (near) engine = am.AcquireLoop(AudioIds.EngineOther, true, true);
+                    if (near)
+                    {
+                        engine = am.AcquireLoop(engineOtherId, true, true);
+                        if (engine == null && engineOtherId != AudioIds.EngineOther)
+                            engine = am.AcquireLoop(AudioIds.EngineOther, true, true);
+                    }
                 }
                 engineIsLocal = local;
                 if (engine == null) return;

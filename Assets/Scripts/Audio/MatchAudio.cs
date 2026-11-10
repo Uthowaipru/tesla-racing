@@ -13,6 +13,12 @@ namespace VehicleSystem
         MatchManager match;
         int lastTick = -1;
 
+        /// <summary>True once a MatchManager has been found.</summary>
+        public bool HasMatch { get { return match != null; } }
+        public bool IsRunning { get { return match != null && match.State == MatchState.Running; } }
+        /// <summary>Time.unscaledTime when the match last became Running.</summary>
+        public float RunningSince { get; private set; }
+
         /// <summary>Point the listener at a match. Call this from the game if the match is created after the scene loads.</summary>
         public void Bind(MatchManager manager)
         {
@@ -84,7 +90,11 @@ namespace VehicleSystem
             if (am == null) return;
 
             if (state == MatchState.Countdown) lastTick = -1;
-            else if (state == MatchState.Running) am.Play(AudioIds.CountdownGo);
+            else if (state == MatchState.Running)
+            {
+                RunningSince = Time.unscaledTime;
+                am.Play(AudioIds.CountdownGo);
+            }
         }
 
         void OnPointsAwarded(MatchPlayer player, int points, ScoreReason reason)

@@ -28,6 +28,7 @@ namespace VehicleSystem
             for (int i = 0; i < all.Count; i++) Attach(all[i]);
 
             if (manager.MatchSounds != null) manager.MatchSounds.RefreshBinding();
+            if (manager.WorldSounds != null) manager.WorldSounds.RefreshBinding();
         }
 
         static AudioManager EnsureManager()

@@ -1,9 +1,11 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace VehicleSystem
 {
     /// <summary>
-    /// World sounds: pickups, traffic knocked, wrong-way warning. Listens to World events only.
+    /// World sounds that need a scene object: the wrong-way warning. Listens to WrongWayTracker only.
+    /// (Pickups and knocked traffic are heard through the cars: see VehicleAudio.)
     /// Lives on the AudioManager object.
     /// </summary>
     [DisallowMultipleComponent]
@@ -11,54 +13,50 @@ namespace VehicleSystem
     {
         WrongWayTracker tracker;
 
+        /// <summary>Point the listener at a tracker. Game may call this instead of waiting for the lookup.</summary>
+        public void SetWrongWayTracker(WrongWayTracker value)
+        {
+            if (ReferenceEquals(tracker, value)) return;
+            Unsubscribe();
+            tracker = value;
+            Subscribe();
+        }
+
+        /// <summary>
+        /// One lookup per scene load (never per frame), the same lookup WrongWayTracker does for its own road.
+        /// See change request 3: a static hook would replace this.
+        /// </summary>
+        public void RefreshBinding()
+        {
+            WrongWayTracker found = FindFirstObjectByType<WrongWayTracker>();
+            if (found != null) SetWrongWayTracker(found);
+        }
+
         void OnEnable()
         {
-            // ASSUMPTION (not compiled): Pickup.Collected and TrafficVehicle.Knocked are static events.
-            //Pickup.Collected += OnPickupCollected;
-            //TrafficVehicle.Knocked += OnTrafficKnocked;
-            SubscribeTracker();
+            SceneManager.sceneLoaded += OnSceneLoaded;
+            Subscribe();
         }
 
         void OnDisable()
         {
-            //Pickup.Collected -= OnPickupCollected;
-            //TrafficVehicle.Knocked -= OnTrafficKnocked;
-            UnsubscribeTracker();
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+            Unsubscribe();
         }
 
-        /// <summary>Called by VehicleAudio when the local car carries a tracker; Game/UI may call it too.</summary>
-        public void SetWrongWayTracker(WrongWayTracker value)
+        void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            if (ReferenceEquals(tracker, value)) return;
-            UnsubscribeTracker();
-            tracker = value;
-            SubscribeTracker();
+            RefreshBinding();
         }
 
-        void SubscribeTracker()
+        void Subscribe()
         {
             if (tracker != null) tracker.WrongWayChanged += OnWrongWayChanged;
         }
 
-        void UnsubscribeTracker()
+        void Unsubscribe()
         {
             if ((object)tracker != null) tracker.WrongWayChanged -= OnWrongWayChanged;
-        }
-
-        void OnPickupCollected(Pickup pickup, VehicleController collector)
-        {
-            AudioManager am = AudioManager.Instance;
-            if (am == null) return;
-
-            if (AudioUtil.IsLocalPlayer(collector)) am.Play(AudioIds.Pickup);
-            else if (pickup != null) am.Play(AudioIds.Pickup, pickup.transform.position);
-        }
-
-        void OnTrafficKnocked(TrafficVehicle traffic)
-        {
-            AudioManager am = AudioManager.Instance;
-            if (am == null || traffic == null) return;
-            am.Play(AudioIds.TrafficKnock, traffic.transform.position);
         }
 
         void OnWrongWayChanged(bool wrongWay)

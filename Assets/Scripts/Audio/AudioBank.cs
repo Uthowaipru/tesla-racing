@@ -40,7 +40,22 @@ namespace VehicleSystem
             [Range(0, 10)] public int priority = 5;
         }
 
+        /// <summary>Which engine entries a vehicle uses. Vehicles not listed use engine_player / engine_other.</summary>
+        [Serializable]
+        public class VehicleEngine
+        {
+            [Tooltip("The vehicle's definition (the same asset as in the Vehicle Catalog; its id is permanent).")]
+            public VehicleDefinition vehicle;
+            [Tooltip("Entry id when the local player drives it. Empty = engine_player.")]
+            public string playerEngineId;
+            [Tooltip("Entry id when another car drives it. Empty = engine_other.")]
+            public string otherEngineId;
+        }
+
         public List<Entry> entries = new List<Entry>();
+
+        [Header("Per-vehicle engines (optional)")]
+        public List<VehicleEngine> vehicleEngines = new List<VehicleEngine>();
 
         [Header("Engine tuning")]
         [Tooltip("Speed (m/s) at which the engine reaches its highest pitch.")]
@@ -58,6 +73,23 @@ namespace VehicleSystem
         [Range(0f, 1f)] public float impactMinRatio = 0.05f;
         [Tooltip("Hits at or above this speedRatio use impact_hard, below use impact_light.")]
         [Range(0f, 1f)] public float impactHardRatio = 0.5f;
+
+        /// <summary>Engine ids for the car whose spawned prefab has this name (without "(Clone)"). False if the vehicle is not listed.</summary>
+        public bool TryGetVehicleEngine(string prefabName, out string playerId, out string otherId)
+        {
+            playerId = null;
+            otherId = null;
+            for (int i = 0; i < vehicleEngines.Count; i++)
+            {
+                VehicleEngine v = vehicleEngines[i];
+                if (v == null || v.vehicle == null || v.vehicle.prefab == null) continue;
+                if (v.vehicle.prefab.name != prefabName) continue;
+                playerId = v.playerEngineId;
+                otherId = v.otherEngineId;
+                return true;
+            }
+            return false;
+        }
 
         public int IndexOf(string id)
         {

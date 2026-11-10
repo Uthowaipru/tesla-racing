@@ -35,3 +35,8 @@ Create the bank with **Tools > Vehicle > Create Audio Bank**, drag clips into th
 
 Music: `AudioManager.PlayMusic(id)` / `StopMusic()` with any entry of category Music. No music id is reserved yet.
 PlayerPrefs keys: `VehicleSystem.Audio.Master`, `.Sfx`, `.Music`, `.Engine`, `.Muted`.
+
+## Per-vehicle engines
+Add entries such as `engine_cng` and `engine_cng_other` (category Engine, loop on, own clips and pitch range), then in the bank's
+**Per-vehicle engines** list add the vehicle's `VehicleDefinition` and those two ids. Empty ids, unlisted vehicles, or an entry with no
+clips yet all fall back to `engine_player` / `engine_other`. The car is matched to its definition by prefab name (without "(Clone)").

@@ -94,7 +94,7 @@ namespace VehicleSystem.EditorTools
 
                 importer.defaultSampleSettings = s;
                 importer.forceToMono = mono;
-                //importer.preloadAudioData = preload;
+                importer.preloadAudioData = preload;
                 importer.SaveAndReimport();
                 changed++;
             }

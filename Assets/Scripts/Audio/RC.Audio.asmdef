@@ -1,0 +1,19 @@
+{
+    "name": "RC.Audio",
+    "rootNamespace": "VehicleSystem",
+    "references": [
+        "RC.Core",
+        "RC.Vehicle",
+        "RC.World",
+        "RC.Match"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

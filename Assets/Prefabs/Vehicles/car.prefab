@@ -1495,7 +1495,6 @@ MonoBehaviour:
   unsafeAirTime: 1.5
   safePointInterval: 1
   safeHistorySeconds: 12
-  cameraRig: {fileID: 0}
   snapCameraOnRecover: 1
 --- !u!114 &6620460329392412271
 MonoBehaviour:

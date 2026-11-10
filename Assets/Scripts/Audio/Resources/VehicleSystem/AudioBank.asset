@@ -1,0 +1,348 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 598de6f7e07a4fbfa34ec06ebf9b523e, type: 3}
+  m_Name: AudioBank
+  m_EditorClassIdentifier: RC.Audio::VehicleSystem.AudioBank
+  entries:
+  - id: ui_click
+    category: 0
+    clips: []
+    volume: 0.8
+    pitchMin: 1
+    pitchMax: 1
+    spatial: 0
+    loop: 0
+    maxVoices: 2
+    cooldown: 0.03
+    minDistance: 3
+    maxDistance: 40
+    priority: 9
+  - id: ui_back
+    category: 0
+    clips: []
+    volume: 0.8
+    pitchMin: 1
+    pitchMax: 1
+    spatial: 0
+    loop: 0
+    maxVoices: 2
+    cooldown: 0.03
+    minDistance: 3
+    maxDistance: 40
+    priority: 9
+  - id: tesla
+    category: 1
+    clips: []
+    volume: 1
+    pitchMin: 0.8
+    pitchMax: 2
+    spatial: 0
+    loop: 1
+    maxVoices: 1
+    cooldown: 0
+    minDistance: 3
+    maxDistance: 40
+    priority: 8
+  - id: engine_other
+    category: 1
+    clips:
+    - {fileID: 8300000, guid: 30367df7f8395cc49a2c46c945b6ab9f, type: 3}
+    volume: 0.6
+    pitchMin: 0.8
+    pitchMax: 1.7
+    spatial: 1
+    loop: 1
+    maxVoices: 3
+    cooldown: 0
+    minDistance: 3
+    maxDistance: 40
+    priority: 3
+  - id: skid_loop
+    category: 0
+    clips: []
+    volume: 0.7
+    pitchMin: 0.9
+    pitchMax: 1.1
+    spatial: 0
+    loop: 1
+    maxVoices: 1
+    cooldown: 0
+    minDistance: 3
+    maxDistance: 40
+    priority: 6
+  - id: impact_light
+    category: 0
+    clips: []
+    volume: 0.8
+    pitchMin: 0.9
+    pitchMax: 1.1
+    spatial: 1
+    loop: 0
+    maxVoices: 3
+    cooldown: 0.08
+    minDistance: 3
+    maxDistance: 40
+    priority: 5
+  - id: impact_hard
+    category: 0
+    clips: []
+    volume: 1
+    pitchMin: 0.85
+    pitchMax: 1.05
+    spatial: 1
+    loop: 0
+    maxVoices: 3
+    cooldown: 0.1
+    minDistance: 3
+    maxDistance: 40
+    priority: 7
+  - id: destroyed
+    category: 0
+    clips: []
+    volume: 1
+    pitchMin: 0.95
+    pitchMax: 1.05
+    spatial: 1
+    loop: 0
+    maxVoices: 2
+    cooldown: 0.2
+    minDistance: 3
+    maxDistance: 40
+    priority: 9
+  - id: respawn
+    category: 0
+    clips: []
+    volume: 0.8
+    pitchMin: 1
+    pitchMax: 1
+    spatial: 1
+    loop: 0
+    maxVoices: 2
+    cooldown: 0.2
+    minDistance: 3
+    maxDistance: 40
+    priority: 6
+  - id: recover
+    category: 0
+    clips: []
+    volume: 0.8
+    pitchMin: 1
+    pitchMax: 1
+    spatial: 1
+    loop: 0
+    maxVoices: 2
+    cooldown: 0.2
+    minDistance: 3
+    maxDistance: 40
+    priority: 6
+  - id: boost_start
+    category: 0
+    clips: []
+    volume: 0.9
+    pitchMin: 1
+    pitchMax: 1
+    spatial: 1
+    loop: 0
+    maxVoices: 2
+    cooldown: 0.1
+    minDistance: 3
+    maxDistance: 40
+    priority: 7
+  - id: boost_end
+    category: 0
+    clips: []
+    volume: 0.7
+    pitchMin: 1
+    pitchMax: 1
+    spatial: 1
+    loop: 0
+    maxVoices: 2
+    cooldown: 0.1
+    minDistance: 3
+    maxDistance: 40
+    priority: 5
+  - id: pickup
+    category: 0
+    clips: []
+    volume: 0.9
+    pitchMin: 0.95
+    pitchMax: 1.05
+    spatial: 1
+    loop: 0
+    maxVoices: 3
+    cooldown: 0.05
+    minDistance: 3
+    maxDistance: 40
+    priority: 7
+  - id: traffic_knock
+    category: 0
+    clips: []
+    volume: 0.8
+    pitchMin: 0.9
+    pitchMax: 1.1
+    spatial: 1
+    loop: 0
+    maxVoices: 4
+    cooldown: 0.06
+    minDistance: 3
+    maxDistance: 40
+    priority: 4
+  - id: wrong_way_start
+    category: 0
+    clips: []
+    volume: 0.9
+    pitchMin: 1
+    pitchMax: 1
+    spatial: 0
+    loop: 0
+    maxVoices: 1
+    cooldown: 0.5
+    minDistance: 3
+    maxDistance: 40
+    priority: 8
+  - id: wrong_way_end
+    category: 0
+    clips: []
+    volume: 0.7
+    pitchMin: 1
+    pitchMax: 1
+    spatial: 0
+    loop: 0
+    maxVoices: 1
+    cooldown: 0.5
+    minDistance: 3
+    maxDistance: 40
+    priority: 6
+  - id: countdown_tick
+    category: 0
+    clips: []
+    volume: 0.9
+    pitchMin: 1
+    pitchMax: 1
+    spatial: 0
+    loop: 0
+    maxVoices: 1
+    cooldown: 0.2
+    minDistance: 3
+    maxDistance: 40
+    priority: 10
+  - id: countdown_go
+    category: 0
+    clips: []
+    volume: 1
+    pitchMin: 1
+    pitchMax: 1
+    spatial: 0
+    loop: 0
+    maxVoices: 1
+    cooldown: 0.2
+    minDistance: 3
+    maxDistance: 40
+    priority: 10
+  - id: match_finish
+    category: 0
+    clips: []
+    volume: 1
+    pitchMin: 1
+    pitchMax: 1
+    spatial: 0
+    loop: 0
+    maxVoices: 1
+    cooldown: 0.5
+    minDistance: 3
+    maxDistance: 40
+    priority: 10
+  - id: points_bump
+    category: 0
+    clips: []
+    volume: 0.6
+    pitchMin: 0.95
+    pitchMax: 1.05
+    spatial: 0
+    loop: 0
+    maxVoices: 2
+    cooldown: 0.08
+    minDistance: 3
+    maxDistance: 40
+    priority: 5
+  - id: points_chain
+    category: 0
+    clips: []
+    volume: 0.7
+    pitchMin: 1
+    pitchMax: 1
+    spatial: 0
+    loop: 0
+    maxVoices: 2
+    cooldown: 0.1
+    minDistance: 3
+    maxDistance: 40
+    priority: 6
+  - id: points_ram
+    category: 0
+    clips: []
+    volume: 0.8
+    pitchMin: 1
+    pitchMax: 1
+    spatial: 0
+    loop: 0
+    maxVoices: 2
+    cooldown: 0.1
+    minDistance: 3
+    maxDistance: 40
+    priority: 6
+  - id: points_overtake
+    category: 0
+    clips: []
+    volume: 0.7
+    pitchMin: 1
+    pitchMax: 1
+    spatial: 0
+    loop: 0
+    maxVoices: 2
+    cooldown: 0.1
+    minDistance: 3
+    maxDistance: 40
+    priority: 6
+  - id: points_crossing
+    category: 0
+    clips: []
+    volume: 0.8
+    pitchMin: 1
+    pitchMax: 1
+    spatial: 0
+    loop: 0
+    maxVoices: 2
+    cooldown: 0.1
+    minDistance: 3
+    maxDistance: 40
+    priority: 6
+  - id: points_penalty
+    category: 0
+    clips: []
+    volume: 0.8
+    pitchMin: 1
+    pitchMax: 1
+    spatial: 0
+    loop: 0
+    maxVoices: 2
+    cooldown: 0.2
+    minDistance: 3
+    maxDistance: 40
+    priority: 7
+  engineReferenceSpeed: 30
+  engineIdleVolume: 0.35
+  engineResponse: 6
+  otherEngineRange: 40
+  maxOtherEngines: 3
+  impactMinRatio: 0.05
+  impactHardRatio: 0.5
